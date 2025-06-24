@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 
@@ -15,6 +16,7 @@ interface StorySubmissionFormProps {
     contactMethod: string;
     name: string;
     openToSharing: boolean;
+    venue: string;
   }) => void;
   onClose: () => void;
 }
@@ -25,6 +27,7 @@ const StorySubmissionForm = ({ onSubmit, onClose }: StorySubmissionFormProps) =>
   const [contactMethod, setContactMethod] = useState('');
   const [name, setName] = useState('');
   const [openToSharing, setOpenToSharing] = useState(false);
+  const [venue, setVenue] = useState('');
   const { toast } = useToast();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -44,7 +47,8 @@ const StorySubmissionForm = ({ onSubmit, onClose }: StorySubmissionFormProps) =>
       teaser: teaser.trim(),
       contactMethod: contactMethod.trim(),
       name: name.trim(),
-      openToSharing
+      openToSharing,
+      venue
     });
 
     toast({
@@ -116,6 +120,22 @@ const StorySubmissionForm = ({ onSubmit, onClose }: StorySubmissionFormProps) =>
             placeholder="How would you like to be credited?"
             className="w-full"
           />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="venue" className="text-sm font-medium">
+            Choose a cozy spot to gather
+          </Label>
+          <Select value={venue} onValueChange={setVenue}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select a venue for potential gatherings" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Black Bird Bookstore & Café">Black Bird Bookstore & Café</SelectItem>
+              <SelectItem value="Ortega Library Branch">Ortega Library Branch</SelectItem>
+              <SelectItem value="Other, let's decide together">Other, let's decide together</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
         <div className="flex items-center space-x-2 pt-2">

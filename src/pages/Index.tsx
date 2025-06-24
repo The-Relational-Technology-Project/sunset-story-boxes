@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import StorySubmissionForm from "@/components/StorySubmissionForm";
+import InterestAlertForm from "@/components/InterestAlertForm";
 
 interface Story {
   id: number;
@@ -12,6 +13,7 @@ interface Story {
   contactMethod?: string;
   name?: string;
   openToSharing?: boolean;
+  venue?: string;
   interestCount: number;
 }
 
@@ -20,6 +22,7 @@ const initialStories: Story[] = [
     id: 1,
     title: "The Fog Cat of 48th Avenue",
     teaser: "Every morning, Mrs. Chen spots the same gray cat emerging from the mist...",
+    venue: "Black Bird Bookstore & Café",
     interestCount: 7
   },
   {
@@ -32,12 +35,14 @@ const initialStories: Story[] = [
     id: 3,
     title: "The Corner Store Angel",
     teaser: "When the Ahmad family opened their market, they never expected to become the neighborhood's guardian angels...",
+    venue: "Ortega Library Branch",
     interestCount: 5
   },
   {
     id: 4,
     title: "Love Letters in the Sand",
     teaser: "Someone has been writing messages in the sand at Noriega Beach for 30 years...",
+    venue: "Black Bird Bookstore & Café",
     interestCount: 9
   },
   {
@@ -57,6 +62,8 @@ const initialStories: Story[] = [
 const Index = () => {
   const [stories, setStories] = useState<Story[]>(initialStories);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [alertDialogOpen, setAlertDialogOpen] = useState(false);
+  const [selectedStoryId, setSelectedStoryId] = useState<number | null>(null);
 
   const handleStorySubmit = (storyData: {
     title: string;
@@ -64,6 +71,7 @@ const Index = () => {
     contactMethod: string;
     name: string;
     openToSharing: boolean;
+    venue: string;
   }) => {
     const newStory: Story = {
       id: Math.max(...stories.map(s => s.id)) + 1,
@@ -84,6 +92,16 @@ const Index = () => {
       )
     );
     console.log(`Interest shown for story ID: ${storyId}`);
+    
+    // Open alert signup
+    setSelectedStoryId(storyId);
+    setAlertDialogOpen(true);
+  };
+
+  const handleAlertSubmit = (alertData: { contactMethod: string; contact: string }) => {
+    console.log(`Alert signup for story ${selectedStoryId}:`, alertData);
+    setAlertDialogOpen(false);
+    setSelectedStoryId(null);
   };
 
   return (
@@ -136,6 +154,11 @@ const Index = () => {
               {story.interestCount >= 5 && (
                 <div className="bg-green-200 text-green-800 text-center py-2 px-4 text-sm font-medium rounded-t-lg">
                   🌟 Event forming soon!
+                  {story.venue && (
+                    <div className="text-xs mt-1">
+                      📍 Gathering at {story.venue}
+                    </div>
+                  )}
                 </div>
               )}
               <CardHeader className="pb-3">
@@ -173,6 +196,17 @@ const Index = () => {
           </p>
         </div>
       </footer>
+
+      {/* Alert Dialog */}
+      <Dialog open={alertDialogOpen} onOpenChange={setAlertDialogOpen}>
+        <InterestAlertForm 
+          onSubmit={handleAlertSubmit}
+          onClose={() => {
+            setAlertDialogOpen(false);
+            setSelectedStoryId(null);
+          }}
+        />
+      </Dialog>
     </div>
   );
 };
