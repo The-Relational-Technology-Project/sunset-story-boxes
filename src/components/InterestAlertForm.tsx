@@ -46,36 +46,36 @@ const InterestAlertForm = ({ onSubmit, onClose }: InterestAlertFormProps) => {
   };
 
   return (
-    <DialogContent className="max-w-md mx-auto">
+    <DialogContent className="max-w-md mx-auto organic-rounded bg-card">
       <DialogHeader>
-        <DialogTitle className="text-xl font-semibold text-center">
-          Get Story Alerts
+        <DialogTitle className="text-2xl font-bold text-center cozy-text text-foreground">
+          📬 Get Story Alerts
         </DialogTitle>
-        <p className="text-sm text-muted-foreground text-center mt-2">
+        <p className="text-sm text-muted-foreground text-center mt-3 font-medium">
           We'll let you know when this story gathering is happening!
         </p>
       </DialogHeader>
       
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-5">
         <div className="space-y-2">
-          <Label htmlFor="method" className="text-sm font-medium">
+          <Label htmlFor="method" className="text-sm font-bold text-foreground">
             How should we contact you?
           </Label>
           <Select value={contactMethod} onValueChange={setContactMethod}>
-            <SelectTrigger className="w-full">
+            <SelectTrigger className="w-full organic-rounded font-medium">
               <SelectValue placeholder="Choose your preferred contact method" />
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="email">Email</SelectItem>
-              <SelectItem value="text">Text</SelectItem>
+            <SelectContent className="organic-rounded">
+              <SelectItem value="email">📧 Email</SelectItem>
+              <SelectItem value="text">📱 Text</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="contact" className="text-sm font-medium">
-            {contactMethod === 'email' ? 'Email Address' : 
-             contactMethod === 'text' ? 'Phone Number' : 'Contact Info'}
+          <Label htmlFor="contact" className="text-sm font-bold text-foreground">
+            {contactMethod === 'email' ? '📧 Email Address' : 
+             contactMethod === 'text' ? '📱 Phone Number' : 'Contact Info'}
           </Label>
           <Input
             id="contact"
@@ -87,22 +87,22 @@ const InterestAlertForm = ({ onSubmit, onClose }: InterestAlertFormProps) => {
               'Enter your contact info'
             }
             type={contactMethod === 'email' ? 'email' : 'text'}
-            className="w-full"
+            className="w-full organic-rounded font-medium"
           />
         </div>
 
-        <DialogFooter className="flex flex-col space-y-2 pt-4">
+        <DialogFooter className="flex flex-col space-y-3 pt-6">
           <Button 
             type="submit" 
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+            className="w-full handmade-button organic-rounded bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-3"
           >
-            Sign me up!
+            🌟 Sign me up!
           </Button>
           <Button 
             type="button" 
             variant="outline" 
             onClick={onClose}
-            className="w-full"
+            className="w-full organic-rounded font-semibold"
           >
             Maybe later
           </Button>

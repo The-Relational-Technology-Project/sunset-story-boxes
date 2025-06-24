@@ -60,16 +60,19 @@ const StorySubmissionForm = ({ onSubmit, onClose }: StorySubmissionFormProps) =>
   };
 
   return (
-    <DialogContent className="max-w-md mx-auto max-h-[90vh] overflow-y-auto">
+    <DialogContent className="max-w-md mx-auto max-h-[90vh] overflow-y-auto organic-rounded bg-card">
       <DialogHeader>
-        <DialogTitle className="text-xl font-semibold text-center">
-          Share Your Story
+        <DialogTitle className="text-2xl font-bold text-center cozy-text text-foreground">
+          ✨ Share Your Story
         </DialogTitle>
+        <p className="text-sm text-muted-foreground text-center mt-2 font-medium">
+          Help weave the fabric of our neighborhood
+        </p>
       </DialogHeader>
       
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-5">
         <div className="space-y-2">
-          <Label htmlFor="title" className="text-sm font-medium">
+          <Label htmlFor="title" className="text-sm font-bold text-foreground">
             Story Title *
           </Label>
           <Input
@@ -77,13 +80,13 @@ const StorySubmissionForm = ({ onSubmit, onClose }: StorySubmissionFormProps) =>
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Give your story a catchy title..."
-            className="w-full"
+            className="w-full organic-rounded font-medium"
             maxLength={100}
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="teaser" className="text-sm font-medium">
+          <Label htmlFor="teaser" className="text-sm font-bold text-foreground">
             One-line teaser *
           </Label>
           <Textarea
@@ -91,13 +94,13 @@ const StorySubmissionForm = ({ onSubmit, onClose }: StorySubmissionFormProps) =>
             value={teaser}
             onChange={(e) => setTeaser(e.target.value)}
             placeholder="A brief, intriguing description of your story..."
-            className="w-full min-h-[80px] resize-none"
+            className="w-full min-h-[80px] resize-none organic-rounded font-medium"
             maxLength={200}
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="contact" className="text-sm font-medium">
+          <Label htmlFor="contact" className="text-sm font-bold text-foreground">
             Contact Method
           </Label>
           <Input
@@ -105,12 +108,12 @@ const StorySubmissionForm = ({ onSubmit, onClose }: StorySubmissionFormProps) =>
             value={contactMethod}
             onChange={(e) => setContactMethod(e.target.value)}
             placeholder="Email, phone, or preferred way to reach you"
-            className="w-full"
+            className="w-full organic-rounded font-medium"
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="name" className="text-sm font-medium">
+          <Label htmlFor="name" className="text-sm font-bold text-foreground">
             Your Name (optional)
           </Label>
           <Input
@@ -118,54 +121,55 @@ const StorySubmissionForm = ({ onSubmit, onClose }: StorySubmissionFormProps) =>
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="How would you like to be credited?"
-            className="w-full"
+            className="w-full organic-rounded font-medium"
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="venue" className="text-sm font-medium">
-            Choose a cozy spot to gather
+          <Label htmlFor="venue" className="text-sm font-bold text-foreground">
+            🏠 Choose a cozy spot to gather
           </Label>
           <Select value={venue} onValueChange={setVenue}>
-            <SelectTrigger className="w-full">
+            <SelectTrigger className="w-full organic-rounded font-medium">
               <SelectValue placeholder="Select a venue for potential gatherings" />
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="Black Bird Bookstore & Café">Black Bird Bookstore & Café</SelectItem>
-              <SelectItem value="Ortega Library Branch">Ortega Library Branch</SelectItem>
-              <SelectItem value="Other, let's decide together">Other, let's decide together</SelectItem>
+            <SelectContent className="organic-rounded">
+              <SelectItem value="Black Bird Bookstore & Café">☕ Black Bird Bookstore & Café</SelectItem>
+              <SelectItem value="Ortega Library Branch">📚 Ortega Library Branch</SelectItem>
+              <SelectItem value="Other, let's decide together">🤝 Other, let's decide together</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
-        <div className="flex items-center space-x-2 pt-2">
+        <div className="flex items-center space-x-3 pt-3">
           <Checkbox
             id="sharing"
             checked={openToSharing}
             onCheckedChange={(checked) => setOpenToSharing(checked as boolean)}
+            className="organic-rounded"
           />
           <Label 
             htmlFor="sharing" 
-            className="text-sm font-medium leading-tight cursor-pointer"
+            className="text-sm font-semibold leading-tight cursor-pointer text-foreground"
           >
-            I'm open to sharing this story live if others are interested
+            🎤 I'm open to sharing this story live if others are interested
           </Label>
         </div>
 
-        <DialogFooter className="flex flex-col space-y-2 pt-4">
+        <DialogFooter className="flex flex-col space-y-3 pt-6">
           <Button 
             type="submit" 
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+            className="w-full handmade-button organic-rounded bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-3"
           >
-            Submit Story
+            🌟 Submit Story
           </Button>
           <Button 
             type="button" 
             variant="outline" 
             onClick={onClose}
-            className="w-full"
+            className="w-full organic-rounded font-semibold"
           >
-            Cancel
+            Maybe later
           </Button>
         </DialogFooter>
       </form>

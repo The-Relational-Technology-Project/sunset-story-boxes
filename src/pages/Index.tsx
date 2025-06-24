@@ -105,30 +105,30 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background fog-texture">
       {/* Header */}
-      <header className="bg-white border-b px-4 py-6">
+      <header className="sunset-gradient border-b border-border/50 px-4 py-8">
         <div className="max-w-md mx-auto text-center">
-          <h1 className="text-2xl font-bold text-foreground mb-2">
+          <h1 className="text-3xl font-bold text-foreground mb-3 cozy-text">
             Little Free Neighborhood Stories
           </h1>
-          <p className="text-muted-foreground text-sm">
+          <p className="text-muted-foreground text-base font-medium">
             Stories from the Outer Sunset community
           </p>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="max-w-md mx-auto px-4 py-6">
+      <main className="max-w-md mx-auto px-4 py-8">
         {/* Submit Story Button */}
-        <div className="mb-8">
+        <div className="mb-10">
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button 
                 size="lg" 
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-4"
+                className="w-full handmade-button organic-rounded bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold py-5 text-lg shadow-lg"
               >
-                Submit a Story
+                ✨ Submit a Story
               </Button>
             </DialogTrigger>
             <StorySubmissionForm 
@@ -139,48 +139,48 @@ const Index = () => {
         </div>
 
         {/* Stories Section */}
-        <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-foreground mb-4">
+        <div className="space-y-6">
+          <h2 className="text-xl font-bold text-foreground mb-6 cozy-text">
             Recent Stories
           </h2>
           
-          {stories.map((story) => (
+          {stories.map((story, index) => (
             <Card 
               key={story.id} 
-              className={`bg-white border shadow-sm ${
-                story.interestCount >= 5 ? 'border-green-300 bg-green-50' : ''
+              className={`story-card organic-rounded bg-card border shadow-md ${
+                story.interestCount >= 5 ? 'border-green-400 bg-green-50/80' : 'border-border/60'
               }`}
             >
               {story.interestCount >= 5 && (
-                <div className="bg-green-200 text-green-800 text-center py-2 px-4 text-sm font-medium rounded-t-lg">
+                <div className="bg-gradient-to-r from-green-300 to-green-400 text-green-900 text-center py-3 px-4 text-sm font-bold organic-rounded rounded-b-none">
                   🌟 Event forming soon!
                   {story.venue && (
-                    <div className="text-xs mt-1">
+                    <div className="text-xs mt-1 font-medium">
                       📍 Gathering at {story.venue}
                     </div>
                   )}
                 </div>
               )}
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg font-semibold text-foreground leading-tight">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-lg font-bold text-foreground leading-snug cozy-text">
                   {story.title}
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-0">
-                <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
+                <p className="text-muted-foreground text-sm mb-5 leading-relaxed font-medium">
                   {story.teaser}
                 </p>
                 <Button 
                   variant="outline" 
                   size="sm"
-                  className={`w-full ${
+                  className={`w-full organic-rounded font-semibold transition-all duration-200 ${
                     story.interestCount >= 5 
-                      ? 'border-green-300 text-green-700 hover:bg-green-100' 
-                      : 'border-blue-200 text-blue-700 hover:bg-blue-50'
+                      ? 'border-green-400 text-green-800 hover:bg-green-100 bg-green-50' 
+                      : 'border-blue-300 text-blue-700 hover:bg-blue-50 bg-blue-25'
                   }`}
                   onClick={() => handleInterestClick(story.id)}
                 >
-                  I want to hear this!
+                  💫 I want to hear this!
                 </Button>
               </CardContent>
             </Card>
@@ -189,10 +189,10 @@ const Index = () => {
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-50 border-t mt-12 px-4 py-6">
+      <footer className="bg-muted/50 border-t border-border/50 mt-16 px-4 py-8">
         <div className="max-w-md mx-auto text-center">
-          <p className="text-xs text-muted-foreground">
-            Connected to Little Free Libraries in the Outer Sunset
+          <p className="text-sm text-muted-foreground font-medium cozy-text">
+            🌊 Connected to Little Free Libraries in the Outer Sunset
           </p>
         </div>
       </footer>
