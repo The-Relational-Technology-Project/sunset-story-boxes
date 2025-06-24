@@ -12,38 +12,45 @@ interface Story {
   contactMethod?: string;
   name?: string;
   openToSharing?: boolean;
+  interestCount: number;
 }
 
 const initialStories: Story[] = [
   {
     id: 1,
     title: "The Fog Cat of 48th Avenue",
-    teaser: "Every morning, Mrs. Chen spots the same gray cat emerging from the mist..."
+    teaser: "Every morning, Mrs. Chen spots the same gray cat emerging from the mist...",
+    interestCount: 7
   },
   {
     id: 2,
     title: "Sunset Surfers at Dawn",
-    teaser: "Before the neighborhood wakes, three friends chase waves at Ocean Beach..."
+    teaser: "Before the neighborhood wakes, three friends chase waves at Ocean Beach...",
+    interestCount: 2
   },
   {
     id: 3,
     title: "The Corner Store Angel",
-    teaser: "When the Ahmad family opened their market, they never expected to become the neighborhood's guardian angels..."
+    teaser: "When the Ahmad family opened their market, they never expected to become the neighborhood's guardian angels...",
+    interestCount: 5
   },
   {
     id: 4,
     title: "Love Letters in the Sand",
-    teaser: "Someone has been writing messages in the sand at Noriega Beach for 30 years..."
+    teaser: "Someone has been writing messages in the sand at Noriega Beach for 30 years...",
+    interestCount: 9
   },
   {
     id: 5,
     title: "The Mystery of the Singing Stairs",
-    teaser: "Every Tuesday at 3 PM, beautiful music echoes from the Moraga Steps..."
+    teaser: "Every Tuesday at 3 PM, beautiful music echoes from the Moraga Steps...",
+    interestCount: 1
   },
   {
     id: 6,
     title: "Garden Wisdom from Judah Street",
-    teaser: "Maria's front yard garden has fed half the block for three decades..."
+    teaser: "Maria's front yard garden has fed half the block for three decades...",
+    interestCount: 3
   }
 ];
 
@@ -60,11 +67,23 @@ const Index = () => {
   }) => {
     const newStory: Story = {
       id: Math.max(...stories.map(s => s.id)) + 1,
-      ...storyData
+      ...storyData,
+      interestCount: 0
     };
     
     setStories(prevStories => [newStory, ...prevStories]);
     setIsDialogOpen(false);
+  };
+
+  const handleInterestClick = (storyId: number) => {
+    setStories(prevStories => 
+      prevStories.map(story => 
+        story.id === storyId 
+          ? { ...story, interestCount: story.interestCount + 1 }
+          : story
+      )
+    );
+    console.log(`Interest shown for story ID: ${storyId}`);
   };
 
   return (
@@ -108,7 +127,17 @@ const Index = () => {
           </h2>
           
           {stories.map((story) => (
-            <Card key={story.id} className="bg-white border shadow-sm">
+            <Card 
+              key={story.id} 
+              className={`bg-white border shadow-sm ${
+                story.interestCount >= 5 ? 'border-green-300 bg-green-50' : ''
+              }`}
+            >
+              {story.interestCount >= 5 && (
+                <div className="bg-green-200 text-green-800 text-center py-2 px-4 text-sm font-medium rounded-t-lg">
+                  🌟 Event forming soon!
+                </div>
+              )}
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg font-semibold text-foreground leading-tight">
                   {story.title}
@@ -121,8 +150,12 @@ const Index = () => {
                 <Button 
                   variant="outline" 
                   size="sm"
-                  className="w-full border-blue-200 text-blue-700 hover:bg-blue-50"
-                  onClick={() => console.log(`Read story: ${story.title}`)}
+                  className={`w-full ${
+                    story.interestCount >= 5 
+                      ? 'border-green-300 text-green-700 hover:bg-green-100' 
+                      : 'border-blue-200 text-blue-700 hover:bg-blue-50'
+                  }`}
+                  onClick={() => handleInterestClick(story.id)}
                 >
                   I want to hear this!
                 </Button>
