@@ -1,8 +1,20 @@
 
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import StorySubmissionForm from "@/components/StorySubmissionForm";
 
-const sampleStories = [
+interface Story {
+  id: number;
+  title: string;
+  teaser: string;
+  contactMethod?: string;
+  name?: string;
+  openToSharing?: boolean;
+}
+
+const initialStories: Story[] = [
   {
     id: 1,
     title: "The Fog Cat of 48th Avenue",
@@ -36,6 +48,25 @@ const sampleStories = [
 ];
 
 const Index = () => {
+  const [stories, setStories] = useState<Story[]>(initialStories);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const handleStorySubmit = (storyData: {
+    title: string;
+    teaser: string;
+    contactMethod: string;
+    name: string;
+    openToSharing: boolean;
+  }) => {
+    const newStory: Story = {
+      id: Math.max(...stories.map(s => s.id)) + 1,
+      ...storyData
+    };
+    
+    setStories(prevStories => [newStory, ...prevStories]);
+    setIsDialogOpen(false);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -54,13 +85,20 @@ const Index = () => {
       <main className="max-w-md mx-auto px-4 py-6">
         {/* Submit Story Button */}
         <div className="mb-8">
-          <Button 
-            size="lg" 
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-4"
-            onClick={() => console.log("Submit story clicked")}
-          >
-            Submit a Story
-          </Button>
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <DialogTrigger asChild>
+              <Button 
+                size="lg" 
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-4"
+              >
+                Submit a Story
+              </Button>
+            </DialogTrigger>
+            <StorySubmissionForm 
+              onSubmit={handleStorySubmit}
+              onClose={() => setIsDialogOpen(false)}
+            />
+          </Dialog>
         </div>
 
         {/* Stories Section */}
@@ -69,7 +107,7 @@ const Index = () => {
             Recent Stories
           </h2>
           
-          {sampleStories.map((story) => (
+          {stories.map((story) => (
             <Card key={story.id} className="bg-white border shadow-sm">
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg font-semibold text-foreground leading-tight">
